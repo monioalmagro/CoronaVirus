@@ -1,0 +1,2 @@
+# CoronaVirus
+manejo de datos

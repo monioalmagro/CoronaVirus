@@ -50,7 +50,7 @@ cursorObj.execute('INSERT INTO tiempo(data) VALUES(?)', str(d))
 conexion.commit()
 
 
-cifras = (2,'Ana', 2.2,43 , 365, 95)
+
 
 
 

@@ -2,6 +2,7 @@ from selenium import webdriver
 import time
 import sqlite3
 import datetime
+from datetime import datetime, date
 
 class data_processing:
     
@@ -10,6 +11,7 @@ class data_processing:
 
 
     def abrir_pagina(self):
+        print("Abriendo pagina")
         self.driver.get("https://google.com/covid19-map/?hl=es-419")
         time.sleep(5)
         print("Midiendo matriz")
@@ -33,7 +35,7 @@ class data_processing:
                 #print("esto es n:",n)
                 #print("esto es b:",b)
                 #print()
-        print("creando base de datos")        
+        print("conectando con la  base de datos")        
         return self.lista        
 
     
@@ -61,7 +63,7 @@ class data_processing:
 
     def cortado_de_lista(self):
         print("terminando")
-        self.today = datetime.date.today()
+        self.today = datetime.now()
         self.lista2=[]
         while len(self.lista)>4:
             for x in range(5):
@@ -108,3 +110,4 @@ script.obtener_datos()
 script.crear_base_de_datos()
 script.cortado_de_lista()
 script.cerrar_chrome()
+

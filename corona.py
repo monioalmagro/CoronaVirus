@@ -13,22 +13,26 @@ class data_processing:
     def abrir_pagina(self):
         print("Abriendo pagina")
         self.driver.get("https://google.com/covid19-map/?hl=es-419")
-        time.sleep(5)
+        time.sleep(7)
         print("Midiendo matriz")
 
     def medir_matriz(self):
-        self.rows = len(self.driver.find_elements_by_xpath("//*[@id='yDmH0d']/c-wiz/div/div[2]/div/div[2]/div[4]/div[1]/div[1]/div/div[2]/div/div[1]/table/tbody/tr"))
-        self.col =  len(self.driver.find_elements_by_xpath("//*[@id='yDmH0d']/c-wiz/div/div[2]/div/div[2]/div[4]/div[1]/div[1]/div/div[2]/div/div[1]/table/tbody/tr[1]/td"))
-        #print(self.rows)
-        #print(self.col)
-        #return self.rows, self.col
+        self.rows = len(self.driver.find_elements_by_xpath("/html/body/c-wiz/div/div[2]/div[2]/div[5]/div/div/div[1]/div/div[1]/table/tbody/tr"))
+        self.col =  len(self.driver.find_elements_by_xpath("/html/body/c-wiz/div/div[2]/div[2]/div[5]/div/div/div[1]/div/div[1]/table/tbody/tr[1]/td"))
+        print(self.rows)
+        print(self.col)
+        return self.rows, self.col
         print("Obteniendo datos")
+        
 
     def obtener_datos(self):
         self.lista=[]
+        #self.lista_pais=[]
         for n in range(2 ,self.rows+1):
             for b in range(1,self.col+1):
-                self.dato = self.driver.find_element_by_xpath("//*[@id='yDmH0d']/c-wiz/div/div[2]/div/div[2]/div[4]/div[1]/div[1]/div/div[2]/div/div[1]/table/tbody/tr["+str(n)+"]/td["+str(b)+"]").text
+                #/html/body/c-wiz/div/div[2]/div[2]/div[5]/div/div/div[1]/div/div[1]/table/tbody/tr[2]/th/div/div
+                #self.pais = self.driver.find_element_by_
+                self.dato = self.driver.find_element_by_xpath("/html/body/c-wiz/div/div[2]/div[2]/div[5]/div/div/div[1]/div/div[1]/table/tbody/tr["+str(n)+"]/td["+str(b)+"]").text
                 self.lista.append(self.dato)
         #print(self.lista)
                 #print(self.dato)
@@ -72,10 +76,10 @@ class data_processing:
             #print(self.lista2)
             #print("esto es el primer dato:",self.lista2[0])
             self.country=self.lista2[0]
-            self.confir=self.lista2[1]
-            self.casos=self.lista2[2]
-            self.recu=self.lista2[3]
-            self.dead=self.lista2[4]
+            self.confir=self.lista2[0]
+            self.casos=self.lista2[1]
+            self.recu=self.lista2[2]
+            self.dead=self.lista2[3]
             self.cifras=[self.country,self.confir,self.casos,self.recu,self.dead,self.today]
             self.conexion=sqlite3.connect("basededatos.db")
             self.cursorObj = self.conexion.cursor()
@@ -110,4 +114,3 @@ script.obtener_datos()
 script.crear_base_de_datos()
 script.cortado_de_lista()
 script.cerrar_chrome()
-
